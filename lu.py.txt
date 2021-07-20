@@ -1,0 +1,40 @@
+#!/usr/bin/python
+
+import logging
+import random
+
+from FVT_PACKAGES.CEXCEPTIONS import CException
+from FVT_PACKAGES.HMCLIB import HMC
+from FVT_PACKAGES.TEST_DRIVER import Test_Suite
+from FVT_PACKAGES.UTILITIES import Utility
+
+class Lu:
+	def __init__(self):
+		print("Lu object created")
+
+	def lu_create_in_cluster(self, node, lu_name, size, vhost=None , map=False, throw_excep=True):
+		"""This function creates lu in cluster with particular size"""
+		"""If map is True it will assign the lu to the vhost specified"""
+		if map is False:
+			return node.execute_command("/usr/ios/cli/ioscli lu -create -lu "+str(lu_name)+" -size "+str(size), throw_exception=throw_excep)
+		else:
+			if vhost is None:
+				raise CException.CException("vhost value is None. If map is True provide vhost value.")
+			else:
+				return node.execute_command("/usr/ios/cli/ioscli lu -create -lu "+str(lu_name)+" -size "+str(size)+" -vadapter "+str(vhost), throw_exception=throw_excep)
+
+	def lu_create_in_tier_with_map(self, node, lu_name, size, tier_name, vhost, throw_excep=True):
+		"""This function creates lu in a specific tier with mapping to the client vhost"""
+		return node.execute_command("/usr/ios/cli/ioscli lu -create -lu "+str(lu_name)+" -size "+str(size)+" -tier "+str(tier_name)+" -vadapter "+str(vhost), throw_exception=throw_excep)
+
+	def lu_unmap_luname(self, node, lu_name, throw_excep=False):
+		"""This function unmaps the lu from the vhost to which it was mapped earlier."""
+		return node.execute_command("/usr/ios/cli/ioscli lu -unmap -lu "+str(lu_name), throw_exception=throw_excep)
+
+	def lu_remove(self, node, lu_name, throw_excep=True):
+		"""This function removes the lu, which internally will delete the lu mapping to vhost as well."""
+		return node.execute_command("/usr/ios/cli/ioscli lu -remove -lu "+str(lu_name), throw_exception=throw_excep)
+
+	def lu_list(self, node, throw_excep=True):
+		"""This function lists all the lus created in the cluster"""
+		return node.execute_command("/usr/ios/cli/ioscli lu -list ", throw_exception=throw_excep)

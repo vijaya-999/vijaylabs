@@ -1,0 +1,65 @@
+Prevalidation Steps:
+========================
+1.VIOS installed with required build,& SEA cofiguration.(ipv6 will configured)
+2.Disks should shared.()
+3.each client---40Gb rootvg+40GB datavg(80GB)
+                caavg----7gb(2 disk)
+                mirroring----Double the size+50Gb extra
+  
+NOTE-:Requirement should be metinaied by user
+
+
+Cluster tool
+=================
+1.provoide eall disk info from DBN node(script will verify if it's share dor not)
+2.Check no-reserve polict & activate pvid.
+3.Tire will based on nodes(based on cec)
+4.LU mapping taken care based on tiers.
+5.Thick,thinn LU based on users requirement(else -random).
+6.Mirroring not implemented now--phase2
+7.ipv6 not considered yet.
+
+
+
+
+ERORR Handling
+================
+Currently populating the msg directly as reported by the script
+We will mentain separate packege
+
+
+
+LOG mentainance
+==================
+1.same location as lpar cretion tool----logger/dumps/cluster regression --folder need to create---keep a file with clustername_date format
+  
+2.
+
+
+============================================
+7----CT tool install client.
+
+
+Workload
+==============
+HTX,BLast,auto regression
+
+
+SSP tool
+
+
+
+
+
+
+
+
+
+
+
+
+
+changes:
+============
+1.disks should be in terms of range ex---hdisk0-hdisk27.
+2.tier,lu  should be , or ; separated
